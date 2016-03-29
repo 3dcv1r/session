@@ -1,7 +1,7 @@
 <?php
 
 /**
-* PHP class for calculating sallary and bonuses
+* PHP class for calculating salary and bonuses
 * and write csv output
 **/
 
@@ -20,8 +20,8 @@ class Salary
      */
     public function __construct($filename = null, $date = null, $test = false)
     {
-	    $this->filename = $filename;
-	    $this->date 	= $date;
+        $this->filename = $filename;
+        $this->date     = $date;
         $this->test     = $test;
     }
 
@@ -30,7 +30,7 @@ class Salary
      */
     public function execute()
     {
-	    // add date if argument is required
+        // add date if argument is required
         if( trim($this->date) == 'y')
         {
             $this->filename .= '-' . date('Y-m-d', time());
@@ -146,12 +146,12 @@ class Salary
         }
 
         // print output table to console if testmode is enabled
-        $mask = "| %-10.10s | %-10.10s | %-10.10s |\n";
+        $mask = "| %-9.9s | %-12.12s | %-10.10s |\n";
 
         echo "\n";
         if ( $this->test == true )
         {
-            foreach ($output as $fields)
+            foreach ( $output as $fields )
             {
                 printf($mask, $fields['0'], $fields['1'], $fields['2']);
             }
@@ -172,7 +172,7 @@ class Salary
         $fp = fopen($path, 'w');
 
         // write csv file
-        foreach ($output as $fields)
+        foreach ( $output as $fields )
         {
             fputcsv($fp, $fields, ',', '"');
         }

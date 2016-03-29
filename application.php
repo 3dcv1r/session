@@ -3,7 +3,7 @@
 // request of first argument
 echo "Please specify name of output file:";
 
-// pick STDIT
+// pick STDIN
 $handle = fopen("php://stdin","r");
 
 // first argument filtering and validation
