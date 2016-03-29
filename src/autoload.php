@@ -1,6 +1,8 @@
 <?php
 
-// simple autoloader
+/**
+ * Simple autoloader
+ */
 spl_autoload_register(function ($class_name) {
     $paths = array(
         'src',

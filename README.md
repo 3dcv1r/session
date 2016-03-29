@@ -1,13 +1,12 @@
 # Simple test application for salary calculation
 ===============================================
-
 Format of the Application
 The output of the utility should be a CSV file, containing the payment dates for the next twelve months. The CSV file should contain a column for the month name, a column that contains the salary payment date for that month, and a column that contains the bonus payment date.
 
 ### 1) Simple phpunit tests are available by command
 
 ```
-$ phpunit --bootstrap src/autoload.php tests/SalaryTest.php
+$ phpunit
 ...
 
 ```

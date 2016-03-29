@@ -11,6 +11,13 @@ class Salary
     private $date;
     private $test;
 
+    /**
+     * Salary constructor
+     *
+     * @param null $filename
+     * @param null $date
+     * @param bool $test is test mode enabled?
+     */
     public function __construct($filename = null, $date = null, $test = false)
     {
 	    $this->filename = $filename;
@@ -18,6 +25,9 @@ class Salary
         $this->test     = $test;
     }
 
+    /**
+     * Execute application
+     */
     public function execute()
     {
 	    // add date if argument is required
@@ -36,9 +46,14 @@ class Salary
         }
     }
 
+    /**
+     * Build output
+     */
     private function buildOutput()
     {
         $month = date('m', time());
+
+        // headers
         $output = [
             [
                 'Month',
@@ -53,23 +68,27 @@ class Salary
             // pick 15 of the month
             $date = gmmktime(12, 0, 0, $month + $i, 15);
 
-            $bonus = $this->calculateBonus($date);
+            // calculate bonuse date
+            $bonusDate = $this->calculateBonus($date);
 
+            // calculate payment date
             $paymentDate = $this->calculatePaymentDay($month, $date, $i);
 
             // collect values in final array
             $output[$i] = [
                 date('F', $date),
                 $paymentDate,
-                $bonus
+                $bonusDate
             ];
         }
 
         // write file
-        $this->writeOutput($output);
+        $this->printOutput($output);
     }
 
     /**
+     * Calculate bonus
+     *
      * @param $date
      * @return date
      */
@@ -88,6 +107,8 @@ class Salary
     }
 
     /**
+     * Calculate payment date
+     *
      * @param $month current month
      * @param $date current iteration date
      * @param $i current iteration month
@@ -111,32 +132,37 @@ class Salary
     }
 
     /**
-     * @param $output array with output
+     * Write output in console for test mode or
+     * run writeFile funciton for normal mode
+     *
+     * @param $output
      */
-    private function writeOutput($output)
+    public function printOutput($output)
     {
+        // wite to file if testmode is disabled
         if ( $this->test !== true )
         {
             $this->writeFile($output);
         }
 
-        // print to console if testmode is enabled
+        // print output table to console if testmode is enabled
+        $mask = "| %-10.10s | %-10.10s | %-10.10s |\n";
+
+        echo "\n";
         if ( $this->test == true )
         {
-            echo "\n";
-
             foreach ($output as $fields)
             {
-                foreach ($fields as $field)
-                {
-                    echo $field . ' | ';
-                }
-                echo "\n";
+                printf($mask, $fields['0'], $fields['1'], $fields['2']);
             }
         }
-
     }
 
+    /**
+     * Write output in CSV file
+     *
+     * @param $output
+     */
     private function writeFile($output)
     {
         // build filepath
